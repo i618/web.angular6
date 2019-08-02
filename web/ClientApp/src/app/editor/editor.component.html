@@ -1,0 +1,60 @@
+<h1>Данные студента</h1>
+
+<p *ngIf="!Student"><em>Загружаю страницу...</em></p>
+
+<div *ngIf="Student">
+  <div class="input-group-prepend mt-3">
+    <span class="input-group-text">Данные студента</span>
+  </div>
+
+  <form #mainForm="ngForm" appIdentityRevealed>
+
+    <div class="input-group mb-3 mt-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Фамилия</span>
+      </div>
+
+      <input name="lastName" type="text" aria-label="Фамилия" class="form-control" [(ngModel)]="Student.lastName" #lastName="ngModel" required maxlength="40">
+      <div [hidden]="lastName.valid || lastName.untouched" class="alert alert-danger p-1 mb-1">Не указана фамилия</div>
+    </div>
+
+    <div class="input-group mb-3 mt-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Имя</span>
+      </div>
+      <input name="firstName" type="text" aria-label="Имя" class="form-control" [(ngModel)]="Student.firstName" #firstName="ngModel" required maxlength="40">
+      <div [hidden]="firstName.valid || firstName.untouched" class="alert alert-danger p-1 mb-1">Не указано имя</div>
+    </div>
+
+    <div class="input-group mb-3 mt-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Отчество</span>
+      </div>
+      <input name="patronymic" type="text" aria-label="Отчество" class="form-control" [(ngModel)]="Student.patronymic" #patronymic="ngModel" maxlength="60">
+    </div>
+
+    <div class="input-group mb-3 mt-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Идентификатор</span>
+      </div>
+      <input name="guid" type="text" aria-label="Идентификатор" class="form-control" [(ngModel)]="Student.guid" #guid="ngModel" updateOn="blur" minlength="6" maxlength="16" uniqueGuid>
+      <div *ngIf="guid.errors?.notUniqueGuid && (guid.touched || guid.dirty)" class="alert alert-danger p-1 mb-1">Не уникальный идентификатор</div>
+
+    </div>
+
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Пол
+      </button>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+         <a class="dropdown-item" *ngFor="let gender of Genders" [class.active]="Student.genderId == gender.id" (click)="Student.genderId = gender.id">{{gender.name}}</a>
+       </div>  
+    </div>
+
+    <div class="input-group mb-3 d-flex justify-content-end">
+      <button id="save" class="btn btn-outline-info my-2 my-sm-0 mr-1" (click)="Save()" [disabled]="lastName.invalid || firstName.invalid || patronymic.invalid || guid.invalid || !Student.genderId">Сохранить</button>
+      <button class="btn btn-outline-info my-2 my-sm-0" [routerLink]="['/']">Отмена</button>
+    </div>
+  </form>
+</div>

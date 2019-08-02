@@ -1,0 +1,43 @@
+<h1>Список студентов</h1>
+
+<p *ngIf="!Students"><em>Загружаю список студентов...</em></p>
+
+<div *ngIf="Students">
+  <div class="input-group mt-3">
+    <input type="text" class="form-control" placeholder="Поиск по фамилии" aria-label="Поиск" aria-describedby="button-find" maxlength="140" #find>
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button" id="button-find" (click)="FindByLastName(find.value)" >Найти</button>
+    </div>
+  </div>
+
+
+  <table class='table table-striped table-hover'>
+    <thead>
+      <tr>
+        <th>Пол</th>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>Идентификатор</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of Students">
+        <td [routerLink]="['edit', student.id]">{{ student.genderName }}</td>
+        <td [routerLink]="['edit', student.id]">{{ student.lastName }}</td>
+        <td [routerLink]="['edit', student.id]">{{ student.firstName }}</td>
+        <td [routerLink]="['edit', student.id]">{{ student.patronymic }}</td>
+        <td [routerLink]="['edit', student.id]">{{ student.guid }}</td>
+        <td>
+          <button class="btn btn-outline-info my-2 my-sm-0" (click)="DeleteStudent(student.id)">Удалить</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex bd-highlight">
+    <button class="mr-auto btn btn-outline-info my-2 my-sm-0 p-2 bd-highlight" [routerLink]="['create']" [routerLinkActive]="['link-active']">Добавить студента</button>
+    <div class="p-2 bd-highlight">Всего студентов: {{TotalStudents()}}</div>
+  </div>
+</div>

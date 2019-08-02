@@ -1,0 +1,12 @@
+<header>
+  <nav class='navbar border-bottom navbar-dark navbar-expand-sm bg-secondary fixed-top'>
+    <div class="container">
+      <a class="navbar-brand" [routerLink]="['/']">На главную</a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Навигация"
+              [attr.aria-expanded]="isExpanded" (click)="toggle()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+</nav>
+</header>
